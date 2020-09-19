@@ -117,17 +117,14 @@
 </div>
 
 <script>
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('GET', `${location.origin}/smdisplay/data/button.json`);
-    // xhr.onreadystatechange = function () {
-    //     if (xhr.readyState === 4 && this.status === 200) {
-    //         load_btn(JSON.parse(xhr.response))
-    //     }
-    // }
-    // xhr.send()
-
-    var s = '{"0": "province", "1": "hour", "2": "path", "5": "version", "6": "ua"}'
-    load_btn(JSON.parse(s))
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', `${location.origin}/smdisplay/data/button.json`);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && this.status === 200) {
+            load_btn(JSON.parse(xhr.response))
+        }
+    }
+    xhr.send()
 
     var type = {
         0: 'china.html', 1: 'hour.html', 2: 'path.html', 3: 'status', 4: 'bytes', 5: 'version.html', 6: 'ua.html'
