@@ -36,6 +36,10 @@
   function load(data) {
     }
     echarts.init($('#main')).setOption({
+      title: {
+        left: 'center',
+        text: '版本使用情况'
+      },
       tooltip: {
         trigger: 'item',
         // formatter: '{b} <br/> 数据量: {c}({d}%)'
