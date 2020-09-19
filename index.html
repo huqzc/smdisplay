@@ -134,8 +134,8 @@
     function load_btn(data) {
         var ul = $('ul')
         var html = '';
-        for (let i of data){
-            html += `<li class="item" data-index="${i.key}">${i.value}</li>`
+        for (let i in data){
+            html += `<li class="item" data-index="${i}">${data[i]}</li>`
         }
         ul.onclick = function (e) {
             if (e.target.nodeName === 'LI')
