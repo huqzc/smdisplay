@@ -117,14 +117,17 @@
 </div>
 
 <script>
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', `${location.origin}/smdisplay/data/button.json`);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && this.status === 200) {
-            load_btn(JSON.parse(xhr.response))
-        }
-    }
-    xhr.send()
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('GET', `${location.origin}/smdisplay/data/button.json`);
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.readyState === 4 && this.status === 200) {
+    //         load_btn(JSON.parse(xhr.response))
+    //     }
+    // }
+    // xhr.send()
+
+    var s = '{"0": "province", "1": "hour", "2": "path", "5": "version", "6": "ua"}'
+    load_btn(JSON.parse(s))
 
     var type = {
         0: 'china.html', 1: 'hour.html', 2: 'method.html', 3: 'path.html', 4: 'status.html', 5: 'referer.html', 6: 'ua.html'
@@ -137,6 +140,7 @@
         for (let i in data){
             html += `<li class="item" data-index="${i}">${data[i]}</li>`
         }
+        ul.innerHTML = html
         ul.onclick = function (e) {
             if (e.target.nodeName === 'LI')
                 bind_data(parseInt(e.target.dataset['index']))
