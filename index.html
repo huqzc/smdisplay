@@ -92,12 +92,7 @@
             <img src="https://www.baidu.com/img/flexible/logo/pc/result.png" alt="logo图片">
         </div>
         <div class="items">
-            <ul>
-                <li class="item" data-index="0">省份</li>
-                <li class="item" data-index="1">时间</li>
-                <li class="item" data-index="3">路径</li>
-                <li class="item" data-index="6">UA</li>
-            </ul>
+            <ul></ul>
         </div>
     </div>
     <div id="container">
@@ -122,15 +117,33 @@
 </div>
 
 <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', `${location.origin}/smdisplay/data/button.json`);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && this.status === 200) {
+            load_btn(JSON.parse(xhr.response))
+        }
+    }
+    xhr.send()
+
     var type = {
         0: 'china.html', 1: 'hour.html', 2: 'method.html', 3: 'path.html', 4: 'status.html', 5: 'referer.html', 6: 'ua.html'
     }
 
-    var ul = $('ul')
-    ul.onclick = function (e) {
-        if (e.target.nodeName === 'LI')
-            bind_data(parseInt(e.target.dataset['index']))
+
+    function load_btn(data) {
+        var ul = $('ul')
+        var html = '';
+        for (let i of data){
+            html += `<li class="item" data-index="${i.key}">${i.value}</li>`
+        }
+        ul.onclick = function (e) {
+            if (e.target.nodeName === 'LI')
+                bind_data(parseInt(e.target.dataset['index']))
+        }
+
     }
+
     function bind_data(data) {
         $('iframe').src = type[data]
     }
