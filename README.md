@@ -1,2 +1,2 @@
 # smdisplay
-some data for sm script
+some infomation for sm's data

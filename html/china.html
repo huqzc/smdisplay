@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+  <script src="js/china.js"></script>
+  <style>
+    #main {
+      width: 100%;
+      height: 700px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="main"></div>
+
+<script>
+  var d =new Date();
+  var year = d.getFullYear();
+  var month = d.getMonth()+1;
+  var day = d.getDate();
+  var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + day;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', `${location.origin}/smdisplay/data/${date}.province_file.json`);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && this.status === 200) {
+      load(JSON.parse(xhr.response))
+    }
+  }
+  xhr.send()
+
+  function load(data) {
+    echarts.init($('#main')).setOption({
+      tooltip: {
+        formatter:function(params,ticket, callback){
+          if (params.value) return params.seriesName+'<br />'+params.name+'：'+params.value;
+          else return params.seriesName+'<br />'+params.name+'：'+ '0';
+        }
+      },
+      title: {
+        left: 'center',
+        text: '用户分布'
+      },
+      visualMap: {
+        min: 0,
+        max: 6000,
+        left: 'left',
+        top: 'bottom',
+        text: ['高','低'],
+        inRange: {
+          color:  ['#6FCF6A', '#FFFD64', '#FF5000']
+        },
+        show:true
+      },
+      geo: {
+        map: 'china',
+        roam: false,
+        zoom:1.23,
+        label: {
+          normal: {
+            show: true,
+            fontSize:'10',
+            color: 'rgba(0,0,0,0.7)'
+          }
+        },
+        itemStyle: {
+          normal:{
+            borderColor: 'rgba(0, 0, 0, 0.2)'
+          },
+          emphasis:{
+            areaColor: '#F3B329',
+            shadowOffsetX: 0,
+            shadowOffsetY: 0,
+            shadowBlur: 20,
+            borderWidth: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      },
+      series : [
+        {
+          name: '数据量',
+          type: 'map',
+          geoIndex: 0,
+          data: data
+        }
+      ]
+    })
+  }
+  function $(dom) {
+    return document.querySelector(dom)
+
+  }
+</script>
+</body>
+</html>

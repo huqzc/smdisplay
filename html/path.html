@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+  <style>
+    #main {
+      width: 100%;
+      height: 700px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="main"></div>
+
+<script>
+  var d =new Date();
+  var year = d.getFullYear();
+  var month = d.getMonth()+1;
+  var day = d.getDate();
+  var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + day;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', `${location.origin}/smdisplay/data/${date}.path_file.json`);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && this.status === 200) {
+      load(JSON.parse(xhr.response))
+    }
+  }
+  xhr.send()
+
+  function load(data) {
+
+    var name = [];
+    var value = [];
+    for (let item of data) {
+      name.push(item['name'])
+      value.push(item['value'])
+    }
+    echarts.init($('#main')).setOption({
+      // 标题
+      title: {
+        text: '功能使用情况',
+        subtext:'路径',
+        left:'center',
+        // borderColor:'grey',
+        // borderWidth: 1
+      },
+      // 工具箱
+      // toolbox: {
+      //   show: true,
+      //   feature:{
+      //     saveAsImage:{
+      //       show:true
+      //     }
+      //   }
+      // },
+      tooltip:{
+        trigger:'axis',
+      },
+      // 图例
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: name
+      },
+
+      // x轴
+      xAxis: {
+        data: name
+      },
+      yAxis: {},
+      // 数据
+      series: [{
+        name: '数据量',
+        type: 'bar',
+        data: value,
+        // markPoint:{
+        //   data:[
+        //     {type:'max',name:'最大值'},
+        //     {type:'min',name:'最小值',symbol:'arrow'}
+        //   ]
+        // },
+        // markLine:{
+        //   data:[
+        //     {type: 'average',name:'平均值'}
+        //   ]
+        // }
+      }
+      ]
+    });
+  }
+
+
+  function $(dom) {
+    return document.querySelector(dom)
+
+  }
+</script>
+</body>
+</html>

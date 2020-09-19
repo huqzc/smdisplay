@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>SM数据图形化</title>
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+    <script src="js/china.js"></script>
+    <style>
+        /*头部css*/
+        #header {
+            width: 100%;
+            height: 70px;
+        }
+        .header-text {
+            text-align: center;
+            font-size: 40px;
+        }
+
+        /*主体部分css*/
+        #body {
+            width: 100%;
+            height: 750px;
+        }
+
+        /*左旁栏css*/
+        #left-side {
+            width: 25%;
+            height: 100%;
+            /*overflow: hidden;*/
+            display: inline-block;
+        }
+
+        ul {
+            height: 80%;
+            list-style: none;
+            font-size: 22px;
+            padding: 0px;
+        }
+
+        ul > li {
+            width: 100%;
+            padding: 20px 0;
+            text-indent: 45px;
+            border: 1px solid gainsboro;
+        }
+
+
+        /*右侧图表部分*/
+        #container {
+            display: inline-block;
+            width: calc(100% - 500px);
+            height: 100%;
+            float: right;
+        }
+
+        #main {
+            width: 100%;
+            height: 100%;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /*尾部css*/
+        #footer {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+        }
+
+        .tail {
+            display: inline-block;
+            padding: 0 60px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<div id="header">
+    <div class="header-text">脚本数据展示系统</div>
+</div>
+<div id="body">
+    <div id="left-side">
+        <div class="logo">
+            <img src="https://www.baidu.com/img/flexible/logo/pc/result.png" alt="logo图片">
+        </div>
+        <div class="items">
+            <ul>
+                <li class="item" data-index="0">省份</li>
+                <li class="item" data-index="1">时间</li>
+                <li class="item" data-index="3">路径</li>
+                <li class="item" data-index="6">UA</li>
+            </ul>
+        </div>
+    </div>
+    <div id="container">
+        <div id="main">
+            <iframe src="" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+<div id="footer">
+    <div class="tail author">
+        <span class="info">作者：huqz</span>
+    </div>
+    <div class="tail github">
+        <span class="info"><a href="https://github.com/huqzc">Github主页</a></span>
+    </div>
+    <div class="tail gitpage">
+        <span class="info"><a href="https://huqzc.github.io">Gitpage</a></span>
+    </div>
+    <div class="tail link">
+        <span class="info">暂无</span>
+    </div>
+</div>
+
+<script>
+    var type = {
+        0: 'china.html', 1: 'hour.html', 2: 'method.html', 3: 'path.html', 4: 'status.html', 5: 'referer.html', 6: 'ua.html'
+    }
+
+    var ul = $('ul')
+    ul.onclick = function (e) {
+        if (e.target.nodeName === 'LI')
+            bind_data(parseInt(e.target.dataset['index']))
+    }
+    function bind_data(data) {
+        $('iframe').src = type[data]
+    }
+
+    function $(dom) {
+        return document.querySelector(dom)
+
+    }
+</script>
+</body>
+</html>
