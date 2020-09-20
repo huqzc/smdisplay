@@ -16,19 +16,22 @@
 <div id="main"></div>
 
 <script>
-  var d =new Date();
-  var year = d.getFullYear();
-  var month = d.getMonth()+1;
-  var day = d.getDate();
-  var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + day;
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', `${location.origin}/smdisplay/data/${date}/version.json`);
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && this.status === 200) {
-      load(JSON.parse(xhr.response))
-    }
-  }
-  xhr.send()
+  // var d =new Date();
+  // var year = d.getFullYear();
+  // var month = d.getMonth()+1;
+  // var day = d.getDate();
+  // var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + day;
+  // var xhr = new XMLHttpRequest();
+  // xhr.open('GET', `${location.origin}/smdisplay/data/${date}/version.json`);
+  // xhr.onreadystatechange = function () {
+  //   if (xhr.readyState === 4 && this.status === 200) {
+  //     load(JSON.parse(xhr.response))
+  //   }
+  // }
+  // xhr.send()
+
+  var s = '[{"name":"1.5.5","value":4619},{"name":"\u66f4\u4f4e\u7248\u672c","value":3557}]'
+  load(JSON.parse(s))
 
   function load(data) {
     echarts.init($('#main')).setOption({
@@ -53,7 +56,8 @@
           avoidLabelOverlap: false,
           label: {
             show: false,
-            position: 'center'
+            position: 'center',
+            formatter: '{b}: {d}%'
           },
           labelLine: {
             show: false
