@@ -20,6 +20,7 @@
   var year = d.getFullYear();
   var month = d.getMonth()+1;
   var day = d.getDate();
+  var hour =d.getHours();
   var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + day;
   var xhr = new XMLHttpRequest();
   xhr.open('GET', `${location.origin}/smdisplay/data/${date}/hour.json`);
@@ -30,12 +31,12 @@
   }
   xhr.send()
 
-
   function load(data) {
-    var value = new Array(10).fill(0);
+    var value = new Array(hour).fill(0);
     for (let item of data) {
       value[item['name']] = item['value']
     }
+    console.log(value);
     echarts.init($('#main')).setOption({
       tooltip: {
         // 当trigger为’item’时只会显示该点的数据，为’axis’时显示该列下所有坐标轴所对应的数据。
