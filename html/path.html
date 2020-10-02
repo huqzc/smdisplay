@@ -20,7 +20,7 @@
   var year = d.getFullYear();
   var month = d.getMonth()+1;
   var day = d.getDate();
-  var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + day;
+  var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + (day < 10 ? ('0' + '' +day) : day);
   var xhr = new XMLHttpRequest();
   xhr.open('GET', `${location.origin}/smdisplay/data/${date}/path.json`);
   xhr.onreadystatechange = function () {
