@@ -22,7 +22,7 @@
   var day = d.getDate();
   var date = year + '' + (month < 10 ? ('0' + '' +month) : month) + '' + (day < 10 ? ('0' + '' +day) : day);
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', `${location.origin}/smdisplay/data/${date}/path.json`);
+  xhr.open('GET', `${location.origin}/smdisplay/data/20201111/path.json`);
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && this.status === 200) {
       load(JSON.parse(xhr.response))
